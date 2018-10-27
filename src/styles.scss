@@ -51,3 +51,10 @@ $divider-color:        #BDBDBD;
 .flex-spacer {
   flex: 1 1 auto;
 }
+
+$background-moredark: #4527A0;
+
+.active {
+    background: $background-moredark;
+}
+
