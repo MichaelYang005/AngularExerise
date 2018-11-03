@@ -25,6 +25,11 @@ import { LeaderService } from './services/leader.service';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms'; 
+
 
 @NgModule({
   declarations: [
@@ -37,6 +42,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AboutComponent,
     ContactComponent,
     LoginComponent, 
+   
     
   ],
   imports: [
@@ -50,6 +56,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     AppRoutingModule,
     MatDialogModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    MatCheckboxModule,
+    FormsModule 
+
   ],
 
   entryComponents: [
