@@ -35,6 +35,10 @@
       </mat-card>
     </div> 
   </div>
+  <div [hidden]="dish">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+
   <div fxFlex="60" fxLayout="column" fxLayout-align="start center">
     <p class="mat-display-1" >COMMENTS</p>
     <mat-list fxFlex *ngIf="dish">
