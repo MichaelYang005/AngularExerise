@@ -21,6 +21,7 @@ export class DishdetailComponent implements OnInit {
   prev: string;
   next: string;
   BURL: string;
+  disherrMess: string;
 
   commentForm: FormGroup;
   newcomment: Comment;
@@ -60,7 +61,7 @@ export class DishdetailComponent implements OnInit {
         comment: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)] ],
       });
   
-      this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
+      this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data),disherrMess => this.disherrMess = <any>disherrMess);
       this.onValueChanged(); // (re)set validation messages now
     }
 
