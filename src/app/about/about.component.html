@@ -58,7 +58,7 @@
     </mat-card>
   </div>
  
-  <div fxFlex *ngIf="leaders">
+  <div fxFlex *ngIf="leaders" [@expand] >
     <div>
       <mat-list>
           <mat-list-item *ngFor="let leader of leaders">
