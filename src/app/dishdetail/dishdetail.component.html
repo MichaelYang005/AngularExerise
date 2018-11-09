@@ -15,7 +15,7 @@
   
      
   <div fxFlex="30">
-    <div fxFlex *ngIf="dish">
+    <div fxFlex *ngIf="dish" [@visibility]="visibility">
       <mat-card>
         <mat-card-header>
           <mat-card-title >
@@ -52,7 +52,7 @@
 
   <div fxFlex="60" fxLayout="column" fxLayout-align="start center">
     <p class="mat-display-1" >COMMENTS</p>
-    <mat-list fxFlex *ngIf="dish">
+    <mat-list fxFlex *ngIf="dish" [@visibility]="visibility">
 
       <mat-list-item *ngFor="let comment of dish.comments">
         
