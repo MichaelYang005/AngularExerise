@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
   dish: Dish;
   promotion: Promotion;
   leader: Leader;
-  BURL: string;
   disherrMess: string;
   promotionErrMess: string;
   leaderErrMess: string;
@@ -34,7 +33,6 @@ export class HomeComponent implements OnInit {
   constructor(private dishservice: DishService,
     private promotionservice: PromotionService, private leaderService: LeaderService,
     @Inject('BaseURL') private BaseURL) { 
-      this.BURL = baseURL;
     }
   
 

@@ -1,8 +1,16 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut, expand } from '../animations/app.animation';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 //import { expand } from 'rxjs/operators';
+
+import { FeedbackService } from '../services/feedback.service';
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
+import { baseURL } from '../shared/baseurl';
+
+
 
 @Component({
   selector: 'app-contact',
@@ -13,16 +21,30 @@ import { flyInOut, expand } from '../animations/app.animation';
     'style': 'display: block;'
     },
     animations: [
+      visibility(),
       flyInOut(),
       expand()
     ]
 })
+
+
+
 export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
+  returnedFeedback: Feedback;
   contactType = ContactType;
   @ViewChild('fform') feedbackFormDirective;
 
+  feedbackErrMess: string;
+  feedbackcopy: Feedback;
+  visibility = 'hidden';
+  newfeedback: Feedback;
+
+  showSpinner: boolean;
+  showForm: boolean;
+  showSubmission: boolean;
+  
   formErrors = {
     'firstname': '',
     'lastname': '',
@@ -52,11 +74,47 @@ export class ContactComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder) {
-    this.createForm();
-  }
+  constructor(private fb: FormBuilder, private feedbackservice: FeedbackService,
+    @Inject('BaseURL') private BaseURL) {
+      this.createForm();
+      this.showSpinner = false;
+      this.showForm = true;
+      this.showSubmission = false;
+    }
+
+    submitFeedback() {
+      //make sure it passes validation
+      if (this.feedbackForm.status == "VALID" ) {
+        this.returnedFeedback = null;
+        this.showSpinner = true;
+        this.showForm = false;
+        this.showSubmission = false;
+        
+        //grab curent newfeedback
+        this.newfeedback = this.feedbackForm.value;
+        this.feedbackcopy = this.newfeedback;
+
+        this.feedbackservice.postFeedback(this.feedbackcopy)
+           .subscribe(feedback => {
+             if (feedback) {
+                 this.returnedFeedback = feedback; this.feedbackcopy = null;  this.showSpinner = false; this.showForm = false;   this.showSubmission = true;
+                 setTimeout (() => {
+                  console.log("Hello from setTimeout");
+                  this.showForm = true;   this.showSubmission = false
+               }, 5000);
+             }
+           },
+           feedbackErrMess => { this.returnedFeedback = null; this.feedback = null; this.feedbackcopy = null; 
+            this.showSubmission = false; this.feedbackErrMess = <any>feedbackErrMess; });
+     
+        this.createForm();
+        this.feedbackFormDirective.resetForm();
+      }
+    }
+
   ngOnInit() {
-    
+    this.showSpinner = false;
+    this.showForm = true;
   }
   createForm() {
     this.feedbackForm = this.fb.group({
@@ -95,9 +153,11 @@ export class ContactComponent implements OnInit {
     }
   }
 
+  
   onSubmit() {
     this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
+    
+    this.submitFeedback();
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -108,6 +168,8 @@ export class ContactComponent implements OnInit {
       message: ''
     });
     this.feedbackFormDirective.resetForm();
+    
   }
+  
 }
 

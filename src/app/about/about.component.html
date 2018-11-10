@@ -62,7 +62,7 @@
     <div>
       <mat-list>
           <mat-list-item *ngFor="let leader of leaders">
-              <img matListAvatar src="{{ BURL + leader.image }}"  alt={{leader.name}}>
+              <img matListAvatar src="{{ BaseURL + leader.image }}"  alt={{leader.name}}>
             
               <p mat-line> {{leader.name}} - {{leader.abbr}} </p>
               <p mat-line> <span > {{leader.designation}}</span></p>

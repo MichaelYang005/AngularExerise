@@ -28,7 +28,6 @@ export class DishdetailComponent implements OnInit {
   dishIds: string[];
   prev: string;
   next: string;
-  BURL: string;
   disherrMess: string;
 
   dishcopy: Dish;
@@ -61,7 +60,6 @@ export class DishdetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location, private fb: FormBuilder,
     @Inject('BaseURL') private BaseURL) {
-      this.BURL = baseURL; 
       this.createForm();
     }
 

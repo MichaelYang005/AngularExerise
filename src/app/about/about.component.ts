@@ -22,12 +22,10 @@ export class AboutComponent implements OnInit {
 
   leaders: Leader[];
   leaderErrMess: string;
-  BURL: string;
-
+  
   constructor(private leaderService: LeaderService,
     @Inject('BaseURL') private BaseURL) { 
-      this.BURL = baseURL;
-    }
+  }
 
   ngOnInit() {
     this.leaderService.getLeaders().subscribe(leaders => this.leaders = leaders, leaderErrMess => this.leaderErrMess = <any>leaderErrMess);
